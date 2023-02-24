@@ -1,19 +1,32 @@
 package bootstrap
 
-import "github.com/amitshekhariitbhu/go-backend-clean-architecture/mongo"
+import (
+	"context"
+	"fmt"
+
+	"github.com/gutorc92/go-backend-clean-architecture/database"
+	"github.com/gutorc92/go-backend-clean-architecture/mongo"
+)
+
+const (
+	MONGO = "mongo"
+)
 
 type Application struct {
-	Env   *Env
-	Mongo mongo.Client
+	Env      *Env
+	Database database.Client
 }
 
 func App() Application {
 	app := &Application{}
 	app.Env = NewEnv()
-	app.Mongo = NewMongoDatabase(app.Env)
+	fmt.Printf("db kind %s\n", app.Env.DBKind)
+	if app.Env.DBKind == MONGO {
+		app.Database = mongo.NewClient(context.TODO(), app.Env.DBHost, app.Env.DBPort, app.Env.DBUser, app.Env.DBPass)
+	}
 	return *app
 }
 
 func (app *Application) CloseDBConnection() {
-	CloseMongoDBConnection(app.Mongo)
+	app.Database.Disconnect(context.TODO())
 }

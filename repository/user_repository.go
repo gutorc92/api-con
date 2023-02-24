@@ -3,19 +3,19 @@ package repository
 import (
 	"context"
 
-	"github.com/amitshekhariitbhu/go-backend-clean-architecture/domain"
-	"github.com/amitshekhariitbhu/go-backend-clean-architecture/mongo"
+	"github.com/gutorc92/go-backend-clean-architecture/database"
+	"github.com/gutorc92/go-backend-clean-architecture/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type userRepository struct {
-	database   mongo.Database
+	database   database.Database
 	collection string
 }
 
-func NewUserRepository(db mongo.Database, collection string) domain.UserRepository {
+func NewUserRepository(db database.Database, collection string) domain.UserRepository {
 	return &userRepository{
 		database:   db,
 		collection: collection,
