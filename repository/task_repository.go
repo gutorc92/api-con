@@ -3,18 +3,18 @@ package repository
 import (
 	"context"
 
-	"github.com/amitshekhariitbhu/go-backend-clean-architecture/domain"
-	"github.com/amitshekhariitbhu/go-backend-clean-architecture/mongo"
+	"github.com/gutorc92/go-backend-clean-architecture/database"
+	"github.com/gutorc92/go-backend-clean-architecture/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type taskRepository struct {
-	database   mongo.Database
+	database   database.Database
 	collection string
 }
 
-func NewTaskRepository(db mongo.Database, collection string) domain.TaskRepository {
+func NewTaskRepository(db database.Database, collection string) domain.TaskRepository {
 	return &taskRepository{
 		database:   db,
 		collection: collection,
